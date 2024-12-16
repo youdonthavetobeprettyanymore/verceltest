@@ -1,7 +1,7 @@
 import { type SanityDocument } from "next-sanity";
 import { client } from "../../sanity/client";
-import BackButton from "../../components/backButtonArchive"; //...
-import ImageGallery from "../../components/ImageGallery"; //if for some reason these dont work then clear cache and restart dev env.
+import BackButton from "../../components/backButtonArchive";
+import ImageGallery from "../../components/ImageGallery";
 
 const POST_QUERY = `*[_type == "event" && slug.current == $slug][0]{
   _id,
@@ -35,12 +35,16 @@ const POST_QUERY = `*[_type == "event" && slug.current == $slug][0]{
 
 const options = { next: { revalidate: 60 } };
 
-export default async function EventPostPage({
-  params,
-}: {
+interface EventPostPageProps {
   params: { slug: string };
-}) {
-  const event = await client.fetch<SanityDocument>(POST_QUERY, params, options);
+}
+
+export default async function EventPostPage({ params }: EventPostPageProps) {
+  const event = await client.fetch<SanityDocument>(
+    POST_QUERY,
+    { slug: params.slug },
+    options
+  );
 
   if (!event) {
     return <div>Something is wrong with event data.</div>;
