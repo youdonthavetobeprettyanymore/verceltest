@@ -35,11 +35,11 @@ const POST_QUERY = `*[_type == "event" && slug.current == $slug][0]{
 
 const options = { next: { revalidate: 60 } };
 
-interface EventPostPageProps {
+export default async function EventPostPage({
+  params,
+}: {
   params: { slug: string };
-}
-
-export default async function EventPostPage({ params }: EventPostPageProps) {
+}) {
   const event = await client.fetch<SanityDocument>(
     POST_QUERY,
     { slug: params.slug },
