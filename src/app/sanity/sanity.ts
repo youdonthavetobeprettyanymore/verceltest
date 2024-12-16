@@ -8,7 +8,6 @@ export const sanityClient = createClient({
   apiVersion: "2023-10-10",
 });
 
-// Needed for pre-loading
 const builder = imageUrlBuilder(sanityClient);
 
 export function urlFor(source: object) {

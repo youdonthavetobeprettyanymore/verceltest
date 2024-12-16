@@ -3,7 +3,6 @@ import { client } from "../../sanity/client";
 import BackButton from "../../components/backButtonArchive";
 import ImageGallery from "../../components/ImageGallery";
 
-// Sanity Query
 const POST_QUERY = `*[_type == "event" && slug.current == $slug][0]{
   _id,
   title,
@@ -35,14 +34,10 @@ const POST_QUERY = `*[_type == "event" && slug.current == $slug][0]{
 }`;
 
 const options = { next: { revalidate: 60 } };
-
-// Type definition for params
 type Params = Promise<{ slug: string }>;
 
 export default async function EventPostPage({ params }: { params: Params }) {
-  // Await params to handle Next.js changes
   const { slug } = await params;
-
   const event = await client.fetch<SanityDocument>(
     POST_QUERY,
     { slug },
