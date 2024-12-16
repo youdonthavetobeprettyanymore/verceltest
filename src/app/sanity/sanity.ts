@@ -11,7 +11,6 @@ export const sanityClient = createClient({
 // Needed for pre-loading
 const builder = imageUrlBuilder(sanityClient);
 
-// Use the `unknown` type for flexibility with runtime checks
 export function urlFor(source: object) {
   return builder.image(source);
 }
